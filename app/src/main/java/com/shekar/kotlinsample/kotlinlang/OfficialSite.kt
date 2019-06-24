@@ -210,6 +210,35 @@ fun swapping() {
     var a: String = "a"
     var b: String = "b"
     a = b.also { b = a }
+
 }
 
 //Coding Conventions
+enum class Test(val value: Int) {
+    A(0) {
+        override fun toString(): String {
+            return "A ENUM"
+        }
+
+        override fun sum() {
+        }
+    },
+    B(1) {
+        override fun sum() {
+        }
+    };
+
+    abstract fun sum()
+}
+
+object Global {
+    val PI = 3.14
+}
+
+open class Person : Any(){
+
+}
+
+class Employee : Person(){
+
+}
