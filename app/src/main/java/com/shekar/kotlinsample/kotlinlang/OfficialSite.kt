@@ -3,6 +3,7 @@ package com.shekar.kotlinsample.kotlinlang
 import java.io.File
 
 fun main(args: Array<String>) {
+
 //    println("sum ${sum(1, 1)}")
 //    println("sumInferred ${sumInferred(1, 1)}")
 //    printSum(1, 1)
@@ -19,6 +20,7 @@ fun main(args: Array<String>) {
 
 //Defining functions
 fun sum(a: Int, b: Int): Int {
+    val a =10
     return a + b
 }
 
@@ -82,7 +84,7 @@ fun getString(obj: Any): Int? {
 //Using for loop
 fun loop() {
     //For loop
-    val items = listOf("A", "B", "C")
+    val items = listOf("InnerClass", "B", "C")
     for (item in items) {
         println(item)
     }
@@ -98,15 +100,15 @@ fun loop() {
 
     //When
     when (items[0]) {
-        "A" -> print("1")
+        "InnerClass" -> print("1")
     }
     when {
-        "A" in items -> print("1")
+        "InnerClass" in items -> print("1")
         "B" in items -> print("2")
     }
 
     //lambda expressions
-    items.filter { it.startsWith("A") }
+    items.filter { it.startsWith("InnerClass") }
         .sortedBy { it }
         .map { it.toUpperCase() }
         .forEach { println(it) }
@@ -154,7 +156,7 @@ fun notNullElse() {
 
 //Executing a statement if null
 fun ifNullExecute() {
-    val items = mapOf<String, Int>("A" to 1, "B" to 2, "C" to 3)
+    val items = mapOf<String, Int>("InnerClass" to 1, "B" to 2, "C" to 3)
     println(items["D"] ?: 0)
 }
 
@@ -217,7 +219,7 @@ fun swapping() {
 enum class Test(val value: Int) {
     A(0) {
         override fun toString(): String {
-            return "A ENUM"
+            return "InnerClass ENUM"
         }
 
         override fun sum() {
