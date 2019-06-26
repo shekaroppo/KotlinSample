@@ -100,7 +100,7 @@ fun getResult(value: Boolean): PageResult {
     return if (value) Success() else Error()
 }
 
-sealed class PageResult
+sealed class PageResult  //PageResult can't be extended outside this class
 class Success : PageResult()
 class Error : PageResult()
 
