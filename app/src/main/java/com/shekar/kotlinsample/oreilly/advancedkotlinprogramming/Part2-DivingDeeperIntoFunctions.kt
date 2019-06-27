@@ -26,6 +26,7 @@ fun main() {
         Syntax of lambda
         { parameter -> function body }
     */
+
     val lambda1: (Int, Int) -> Int = { x: Int, y: Int -> x + y }
     add(1, 1, lambda1)
     //or
@@ -40,6 +41,15 @@ fun main() {
     add(1, 1) { x, y -> x + y }
     //or
     add(1, { it + it }) //For single param we can use it
+
+    /*====Lambda Extensions or lambda with receivers in Kotlin====
+    Int.() -> Long  // taking an integer as receiver producing a long
+    String.(Long) -> String // taking a string as receiver and long as parameter producing a string
+    GUI.() -> Unit // taking an GUI and producing nothing
+    */
+    var greet: String.() -> Unit = { println("Hello $this") }
+    greetFun({ "Hi" })
+
 
     /*====Anonymous function====
         Syntax of Anonymous function
@@ -82,11 +92,6 @@ fun main() {
     println(Sum(1).plus(Sum(1)))
     println(Sum(1) + (Sum(1)))
 
-    /*====Lambda Extensions or lambda with receivers in Kotlin====*/
-    addition {
-
-    }
-
 }
 
 
@@ -116,17 +121,19 @@ fun add(x: Int, y: Int, action: (Int, Int) -> Int) {
     println(action(x, y))
 }
 
-fun add(x: Int, action: (Int) -> Int) {
-    println(action(x))
+fun add(x: Int, action: (Int) -> Int) = println(action(x))
+
+/*====Lambda Extensions or lambda with receivers in Kotlin====*/
+fun greetFun(function: String.() -> String) {
 }
 
+/*====Inline Function====*/
 fun operation(op: () -> Unit) {
     println("before calling op")
     op()
     println("after calling op ")
 }
 
-/*====Inline Function====*/
 inline fun inlineFunction(op1: () -> Unit) {
     println("before calling op")
     op1()
@@ -240,11 +247,3 @@ class Sum(private val x: Int) {
     }
 }
 
-/*====Lambda Extensions or lambda with receivers in Kotlin====*/
-class Addition(val x: Int, val y: Int) {
-    fun add(): Int {
-        return x + y
-    }
-}
-
-fun addition(add: Addition.() -> Unit) {}
