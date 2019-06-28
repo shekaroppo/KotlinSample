@@ -3,14 +3,18 @@ package com.shekar.kotlinsample.oreilly.advancedkotlinprogramming
 
 fun main() {
 
-    /*====Local Functions in Kotlin====*/
+    /*====Local Functions in Kotlin====
+    * All code related to one function can be sub modularized in inner functions instead of over populating member function of class.
+    */
+
     foo("Hello")
+
 
     /*====Infix Functions in Kotlin====*/
     println("Hello".isEqual("Hello")) //Without infix
     println("Hello" isEqual "Hello")//With infix
 
-    /*====Higher order functions examples which accept Anonymous Functions/Lambda Expressions*/
+
     /*====Functions with interface as parameter====*/
     add(1, 1, object : AdditionInterface {
         override fun execute(x: Int, y: Int): Int {
@@ -18,16 +22,24 @@ fun main() {
         }
     })
 
+
     /*====Named Function====*/
     fun addition(x: Int, y: Int): Int = x + y
     add(1, 1, ::addition)
+
 
     /*====Lambda Function====
         Syntax of lambda
         { parameter -> function body }
     */
 
-    val lambda1: (Int, Int) -> Int = { x: Int, y: Int -> x + y }
+    /*====Example-1 lambda function====*/
+    greetLambda()
+    println(squareLambda(2))
+    producePrinterLambda()()
+
+    /*====Example-2 Higher order Function accepting Function literals and lambda functions ====*/
+    val lambda1: (Int, Int) -> Int = { x: Int, y: Int -> x + y } //Function literal
     add(1, 1, lambda1)
     //or
     val lambda2 = { x: Int, y: Int -> x + y }
@@ -36,31 +48,52 @@ fun main() {
     val lambda3: (Int, Int) -> Int = { x, y -> x + y }
     add(1, 1, lambda3)
     //or
-    add(1, 1, { x, y -> x + y })
+    add(1, 1, { x, y -> x + y }) //lambda functions
     //or
     add(1, 1) { x, y -> x + y }
     //or
     add(1, { it + it }) //For single param we can use it
 
-    /*====Lambda Extensions or lambda with receivers in Kotlin====
-    Int.() -> Long  // taking an integer as receiver producing a long
-    String.(Long) -> String // taking a string as receiver and long as parameter producing a string
-    GUI.() -> Unit // taking an GUI and producing nothing
-    */
-    var greet: String.() -> Unit = { println("Hello $this") }
-    greetFun({ "Hi" })
-
 
     /*====Anonymous function====
         Syntax of Anonymous function
         fun(parameter):output { return function body}
+        fun(parameter):output =  function body with single line
     */
+
+    greetAnonymus()
+    println(squareAnonymus(2))
+    producePrinterAnonymus()()
+
     val anonymousFunction = fun(x: Int, y: Int): Int { return x + y }
     add(1, 2, anonymousFunction)
     //or
     add(1, 2, fun(x, y): Int { return x + y })
     //or
     add(1, fun(x): Int { return x + x })
+    //or
+    add(1, fun(x): Int = x + x)
+
+
+    /*====Lambda Extensions or Function literal  with receivers in Kotlin
+    Int.() -> Long  // taking an integer as receiver producing a long
+    String.(Long) -> String // taking a string as receiver and long as parameter producing a string
+    ExampleClass.() -> Unit // taking an GUI and producing nothing
+    */
+
+    1.print()
+    1.add(1)
+    functionWithReciver {
+        minus(1, 2)
+        add(1, 2)
+    }
+
+    /*====Invoking instances in Kotlin====*/
+    val invokeResponse = InvokeResponse()
+    invokeResponse {
+        minus(1, 2)
+        add(1, 2)
+    }
 
     /*====Inline function====*/
     operation { println("op") }
@@ -116,15 +149,53 @@ fun add(x: Int, y: Int, action: AdditionInterface) {
     println(action.execute(x, y))
 }
 
-/*====Higher order Function accepting lambda function====*/
+/*====Lambda function====*/
+
+/*====Example-1 lambda function====*/
+//()->Unit —the function type that returns nothing useful (Unit) and takes no arguments.
+val greetLambda: () -> Unit = { println("Hello") }
+//(Int)->Int— the function type that returns Int and takes single argument of type Int.
+val squareLambda: (Int) -> Int = { x -> x * x }
+//()->()->Unit— the function type that returns another function that returns nothing useful (Unit).
+val producePrinterLambda: () -> () -> Unit = { { println("I am printing") } }
+
+/*====Example-2 Higher order Function accepting lambda function====*/
 fun add(x: Int, y: Int, action: (Int, Int) -> Int) {
     println(action(x, y))
 }
 
 fun add(x: Int, action: (Int) -> Int) = println(action(x))
 
+
+//Anonymus function
+val greetAnonymus: () -> Unit = fun() { println("Hello") }
+val squareAnonymus: (Int) -> Int = fun(x) = x * x
+val producePrinterAnonymus: () -> () -> Unit = fun() = fun() { println("I am printing") }
+
 /*====Lambda Extensions or lambda with receivers in Kotlin====*/
-fun greetFun(function: String.() -> String) {
+val print: Int.() -> Unit = { println(this) }
+val add: Int.(x: Int) -> Unit = { x -> println(this + x) }
+
+fun functionWithReciver(function: Operation.() -> Unit): Operation {
+    val o = Operation()
+    o.function()
+    return o
+}
+
+class Operation {
+    fun add(x: Int, y: Int) {
+        println(x + y)
+    }
+
+    fun minus(x: Int, y: Int) {
+        println(x - y)
+    }
+}
+
+/*====Invoking instances in Kotlin====*/
+class InvokeResponse {
+    operator fun invoke(function: Operation.() -> Unit) {
+    }
 }
 
 /*====Inline Function====*/
@@ -247,3 +318,4 @@ class Sum(private val x: Int) {
     }
 }
 
+//https://blog.kotlin-academy.com/kotlin-programmer-dictionary-function-type-vs-function-literal-vs-lambda-expression-vs-anonymous-edc97e8873e
