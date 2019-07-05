@@ -5,6 +5,7 @@ import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 //[Kotlin Coroutines Tutorial (STABLE VERSION) - async / await, withContext, launch](https://www.youtube.com/watch?v=jYuK1qzFrJg)
+//https://play.kotlinlang.org/hands-on/Introduction%20to%20Coroutines%20and%20Channels/02_BlockingRequest
 
 fun printlnThreadDelay(msg: String) {
     Thread.sleep(1000)
