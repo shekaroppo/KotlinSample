@@ -10,20 +10,8 @@ interface Rectangle {
     fun area(width: Int, height: Int): Int
 }
 
-val rectangle = object : Rectangle {
-    override fun area(width: Int, height: Int): Int {
-        return width * height
-    }
-}
-
 interface Square {
     fun area(length: Int): Int
-}
-
-val square = object : Square {
-    override fun area(length: Int): Int {
-        return length * length
-    }
 }
 
 class Window(val bound: Rectangle) {
@@ -32,6 +20,17 @@ class Window(val bound: Rectangle) {
 
 class WindowWithDelegate(rectBound: Rectangle, squareBound: Square) : Rectangle by rectBound, Square by squareBound
 
+val rectangle = object : Rectangle {
+    override fun area(width: Int, height: Int): Int {
+        return width * height
+    }
+}
+
+val square = object : Square {
+    override fun area(length: Int): Int {
+        return length * length
+    }
+}
 
 /*====Delegating Properties in Kotlin====*/
 class DelegatingPropertiesExample {
@@ -72,6 +71,7 @@ val String.hasDollor: Boolean
     get() = this.contains("$")
 
 
+
 fun main() {
 
     /*====Delegating Member Functions in Kotlin====*/
@@ -106,7 +106,9 @@ fun main() {
     /*====Extension Properties in Kotlin & Summary====*/
     println("Hello".hasDollor)
     println("Hello $".hasDollor)
+
 }
+
 
 
 

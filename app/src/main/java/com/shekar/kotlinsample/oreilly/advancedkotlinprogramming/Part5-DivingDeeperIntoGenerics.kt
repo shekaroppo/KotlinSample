@@ -1,6 +1,5 @@
 package com.shekar.kotlinsample.oreilly.advancedkotlinprogramming
 
-
 /*====Generic Constraints in Kotlin ====*/
 open class Department(val departmentName: String = "CSE")
 
@@ -78,22 +77,18 @@ class ContravarianceExampleImpl<in T> : ContravarianceExample<T> {
     }
 }
 
+/*====Type Projections in Kotlin & Summary====*/
 fun operate(contravarianceExample: ContravarianceExample<Person>) {
 
 }
-/*====Type Projections in Kotlin & Summary====*/
-
 
 fun main() {
-
     /*====Generic Constraints in Kotlin ====*/
     val db = Database<EmployeeEntityOne>()
     db.save(EmployeeEntityOne())
 
     val db2 = MultiEntityDb<EmployeeEntityTwo>()
     db2.save(EmployeeEntityTwo())
-
-    //Function type restriction
     val department = getDepartment(EmployeeEntityOne())
 
     /*====Generics and Invariance====*/
